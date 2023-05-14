@@ -17,6 +17,14 @@ const Data = new mongoose.Schema({
     topCoins: {
         type: mongoose.Schema.Types.Mixed, 
         default: {},
+        // time: {
+        //     type: Number,
+        //     default: 0
+        // },
+        // coins: {
+        //     type: [mongoose.Schema.Types.Mixed],
+        //     default: []
+        // }
     }
 }, {
     timestamps: {
