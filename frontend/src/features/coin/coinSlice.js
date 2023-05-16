@@ -110,7 +110,7 @@ export const coinSlice = createSlice({
     name: 'coin',
     initialState,
     reducers: {
-        reset: (state) => {
+        resetCoin: (state) => {
             state.coin = ''
             state.coins = []
             state.isRejected = false
@@ -121,8 +121,6 @@ export const coinSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-
-
 
             .addCase(getCoin.rejected, (state, action) => {
                 state.isRejected = true
@@ -141,8 +139,6 @@ export const coinSlice = createSlice({
                 state.coin = action.payload
             })
 
-
-
             .addCase(getTopCoins.rejected, (state, action) => {
                 state.isRejected = true
                 state.isPending = false
@@ -159,8 +155,6 @@ export const coinSlice = createSlice({
                 state.isFulfilled = true
                 state.coins = action.payload
             })
-
-
 
             .addCase(getAllCoins.rejected, (state, action) => {
                 state.isRejected = true
@@ -196,7 +190,6 @@ export const coinSlice = createSlice({
                 state.coins = action.payload
             })
 
-
             .addCase(getTx.rejected, (state, action) => {
                 state.isRejected = true
                 state.isPending = false
@@ -230,8 +223,6 @@ export const coinSlice = createSlice({
                 state.isFulfilled = true
                 state.coins = action.payload
             })
-
-
             
             .addCase(testCoin.rejected, (state, action) => {
                 state.isRejected = true
@@ -254,4 +245,4 @@ export const coinSlice = createSlice({
 })
 
 export default coinSlice.reducer
-export const { reset } = coinSlice.actions
+export const { resetCoin } = coinSlice.actions

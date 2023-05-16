@@ -1,53 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getTx } from '../features/coin/coinSlice';
+import { getCoin } from '../features/coin/coinSlice';
 
 import ExamplePie from '../components/ExamplePie'
 import ExampleLine from '../components/ExampleLine'
-
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { TextField } from '@mui/material';
-
-import { getTx } from '../features/coin/coinSlice';
-import Typography from '@mui/material/Typography';
 import TxCell from '../components/TxCell'
-import { Button } from '@mui/material'
-import { useState } from 'react';
 
 import { generatePieData } from '../utils/generatePieData';
 import { generateLineData } from '../utils/generateLineData';
 import { convertDate } from '../utils/convertDate';
-
-import { Grid, Paper, Container} from '@mui/material'
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-
-import { getCoin } from '../features/coin/coinSlice';
 import { lineData } from '../utils/data';
+
+import { TextField, Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Grid, Container, Typography, Tabs, Tab } from '@mui/material';
 import { tableCellClasses } from "@mui/material/TableCell";
 
-const Profile = () => {
 
+const Profile = () => {
 
     const dispatch = useDispatch()
 
     const { user } = useSelector((state) => state.auth)
-    
     const { coins, isPending, isRejected, message } = useSelector((state) => state.coin)
-
-    console.log('user', user)
-    console.log('coins', coins)
-
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
         
     const [value, setValue] = useState('daily');
     const [filteredCoinState, setFilteredCoinState] = useState(coins)
@@ -56,8 +31,6 @@ const Profile = () => {
     const [lineGraph, setLineGraph] = useState('')
 
     const pieData = generatePieData(coins)
-
-    // console.log('filteredstate is', filteredCoinState)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -77,22 +50,8 @@ const Profile = () => {
         setPage(0);
     }
 
-    ///////////////////////////////////////////
-    // the issue right now is that linedatafunc is sometimes receiving object coins thats from the previous state that should've been updated and sometimes receiving []
-    // it works for now, but there are a lot of errors in console
-    // to recreate problem change
-    // const uniqueCoinsUser = Object.keys(coins[0]).includes('userId') ? [...new Set(coins.map(coin => coin.coinId))] : []
-    // to 
-    // const uniqueCoinsUser = [...new Set(coins.map(coin => coin.coinId))]
-    // you might need to just create a different object in redux for this
-    ///////////////////////////////////////////
-
     const lineDataFunc = async() => {
         console.log('linedatafunc is using coins', coins)
-        // coins here is []
-        // We want to replace [] with what is in local storage => ?
-        // coins[0] = undefined
-        //  Object.keys(coins[0]) => Object.keys(undefined) => Error
         const uniqueCoinsUser = Object.keys(coins[0]).includes('userId') ? [...new Set(coins.map(coin => coin.coinId))] : []
         const cache = {}
 
@@ -121,13 +80,9 @@ const Profile = () => {
             for (let i of missing) {
                 console.log('there are missing one is ', i)
                 await dispatch(getCoin(i))
-                // console.log('these are missing', i)
-                // console.log(localStorage.getItem(i))
                 cache[i] = JSON.parse(localStorage.getItem(i))
             }
         }
-
-        // getting new values for missing coins need to happen here
 
         const lineData = generateLineData(cache, uniqueCoinsUser, coins)
         setLineGraph(lineData)

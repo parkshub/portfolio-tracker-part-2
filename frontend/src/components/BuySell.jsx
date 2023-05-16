@@ -1,40 +1,26 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify'
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import { txCoin } from '../features/coin/coinSlice';
+
+import { Box, Typography, Modal, Avatar, Button, CssBaseline, TextField, Grid, Container, Checkbox, FormControlLabel } from '@mui/material';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-
-import { txCoin } from '../features/coin/coinSlice';
-import { toast } from 'react-toastify'
 import dayjs from 'dayjs';
-
-
-// when you want to show users tx history with certain coin, just populate the users tx array in the controller
 
 export default function BuySell({transaction, yearlyData, coinInfo}) {
 
+  const dispatch = useDispatch()
+  
   const min = dayjs().set('date', 3).set('month', 0).set('year', 2009)
   const max = dayjs()
 
   const type = transaction === "buy" ? "Buy" : "Sell"
-
-  const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0)
@@ -44,7 +30,6 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
   })
   const [date, setDate] =useState('')
   const [manualInput, setManualInput] = useState(false)
-
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -66,7 +51,6 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
       let UTCDate = new Date(dateString).getTime()
       setDate(UTCDate)
 
-
       let minDate = new Date()
       minDate.setFullYear(minDate.getFullYear() - 1)
       minDate.setDate(minDate.getDate() - 2);
@@ -80,17 +64,13 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
       if (!manualInput) {
         
         let tempPrice = yearlyData.filter(x => x.includes(UTCDate))
-        
-
         let price = tempPrice.length > 0 ? yearlyData.filter(x => x.includes(UTCDate))[0][1] : coinInfo.market_data.current_price.usd
-        // console.log('this is price', coinInfo.market_data)
 
         setFormData((prev) => ({
           ...prev,
           price: price.toFixed(2),
         }))      
       }
-
   }
 
   const handleChangeCheck = (e) => {
@@ -115,9 +95,7 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
 
   const submitTest = (e) => {
     e.preventDefault()
-    // const data = { coinId: coinInfo.id, coinSymbol: coinInfo.symbol, coinImage: coinInfo.image.small, price: formData.price, amount: formData.amount, date, type: transaction , total}
     const data = { coinId: coinInfo.id, coinSymbol: coinInfo.symbol, coinImage: coinInfo.image.small, price: formData.price, amount: formData.amount, date, type: transaction , total}
-    console.log('submit button was pressed and this is data ', data)
     dispatch(txCoin(data))
     handleClose()
   }
@@ -126,15 +104,10 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
     setTotal(Number((formData.amount * formData.price).toFixed(2)))
   }, [formData])
 
-
-// make handle submit
-
   return (
     <div>
       <Button onClick={handleOpen}>
-      {/* <Typography onClick={handleOpen}> */}
         {type}
-      {/* </Typography> */}
       </Button>
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description" >
         <Container component="main" maxWidth="xs">
@@ -147,7 +120,6 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
               {type}
             </Typography>
 
-            {/* make an onsubmit for box */}
             <Box component="form" noValidate onChange={handleChangeFormData} sx={{ mt: 3 }} onSubmit={submitTest}> 
               <Grid container spacing={2}>
                 <Grid item xs={12}>

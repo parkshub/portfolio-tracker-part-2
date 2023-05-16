@@ -1,23 +1,17 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Container from '@mui/material/Container';
+import { useDispatch } from 'react-redux';
 
 import { registerUser } from '../features/user/userSlice';
-import { useDispatch } from 'react-redux';
+
+import { Box, Typography, Modal, Avatar, Button, CssBaseline, TextField, Grid, Container } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export default function BasicModal() {
 
   const dispatch = useDispatch()
 
   const [open, setOpen] = React.useState(false);
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -31,7 +25,6 @@ export default function BasicModal() {
       password: formData.get('password'),
       password2: formData.get('confirmPassword'),
     }
-    console.log(body)
     dispatch(registerUser(body))
   };
 
@@ -127,7 +120,6 @@ export default function BasicModal() {
             </Button>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
       </Modal>
     </div>

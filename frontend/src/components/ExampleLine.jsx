@@ -8,7 +8,7 @@ const MyResponsiveLine = ({data}) => (
         yScale={{
             type: 'linear',
             min: 'auto',
-            max: 'auto', // create a variable to max and make that the max instead of auto
+            max: 'auto', 
             stacked: true,
             reverse: false
         }}
@@ -21,9 +21,6 @@ const MyResponsiveLine = ({data}) => (
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 50,
-            // legend: 'transportation',
-            // legendOffset: 50,
-            // legendPosition: 'middle'
         }}
         colors="#2196f3"
         axisLeft={{
@@ -36,7 +33,6 @@ const MyResponsiveLine = ({data}) => (
             legendOffset: -60,
             legendPosition: 'middle'
         }}
-        // enableArea={true}
         enableGridY={false}
         enableGridX={false}
         enablePoints={false}

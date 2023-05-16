@@ -1,4 +1,3 @@
-let a = []
+let a = new Date(1684022400000)
 
-console.log(Object.keys(a).includes('something'))
-
+console.log(a)

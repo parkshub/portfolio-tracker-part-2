@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Grid, Button, Typography, Box, Paper, Container} from '@mui/material'
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -11,28 +12,26 @@ const Carousel = ({coins}) => {
   const responsive = {
     0: { items: 1 },
     568: { items: 4 },
-    // 1024: { items:  },
-};
+  };
 
-const items = coins.map((coin) => {
-  return (
-  <Grid container justify="column">
-    <Grid item xs={12} textAlign="center">
-      <img src={coin.image} height="100px"/>
+  const items = coins.map((coin) => {
+    return (
+    <Grid container justify="column">
+      <Grid item xs={12} textAlign="center">
+        <img src={coin.image} height="100px"/>
+      </Grid>
+      <Grid item xs={12} textAlign="center">
+        <p>{coin.name}</p>
+        <p>{coin.price_change_percentage_24h}% {String(coin.price_change_percentage_24h).startsWith('-') ? <TrendingDownIcon color='secondary'/> : <TrendingUpIcon color='primary'/>}</p>
+        <p>${coin.current_price}</p>
+      </Grid>
     </Grid>
-    <Grid item xs={12} textAlign="center">
-      <p>{coin.name}</p>
-      <p>{coin.price_change_percentage_24h}% {String(coin.price_change_percentage_24h).startsWith('-') ? <TrendingDownIcon color='secondary'/> : <TrendingUpIcon color='primary'/>}</p>
-      <p>${coin.current_price}</p>
-    </Grid>
-  </Grid>
-  )
-})
+    )
+  })
 
-
+  /* https://github.com/Learus/react-material-ui-carousel/blob/master/README.md */
   return (
     <AliceCarousel
-        // mouseTracking
         infinite
         items={items}
         responsive={responsive}

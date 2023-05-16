@@ -1,27 +1,21 @@
 import React from 'react'
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/material'
-
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { deleteTx } from '../features/coin/coinSlice';
-import { Link } from 'react-router-dom';
-import { border } from '@mui/system';
-import {Typography} from '@mui/material';
+
+import { Button, TableCell, TableRow, Typography } from '@mui/material'
 
 const TxCell = ({coin}) => {
 
     const dispatch = useDispatch()
 
     const onClickDelete = (e) => {
-        // e.stopPropogation()
         dispatch(deleteTx(coin._id))
     }
 
     return (
         <TableRow component={Link} to={`/coins/${coin.coinId}`} style={{textDecoration: 'none'}} hover='true'>
-        {/* <TableRow> */}
             <TableCell>
                 <Typography>
                     {(new Date(coin.date)).toDateString()}

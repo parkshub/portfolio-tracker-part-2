@@ -38,6 +38,8 @@ const getCoin = async(id) => {
     // uncomment this
     const response = await axios.get(API_URL + `getCoin/${id}/${getAll}`)
 
+    console.log('get coin service this was the response', response)
+
     if (getAll) {
         // input time into it
         console.log('coin service is telling controller to get all and received', response.data)

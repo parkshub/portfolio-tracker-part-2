@@ -1,62 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { toast } from 'react-toastify'
 
-import { getCoin } from '../features/coin/coinSlice'
-
+import { getTx, getCoin, resetCoin } from '../features/coin/coinSlice';
+// import { getCoin,resetCoin } from '../features/coin/coinSlice'
+// import { resetCoin } from '../features/coin/coinSlice'
 
 import ExampleLine from '../components/ExampleLine'
-
-import { lineData, pieData } from '../utils/data'
-
-import { Grid, Button, Typography, Box, Paper, Container} from '@mui/material'
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-
-import { reset } from '../features/coin/coinSlice'
-
 import BuySell from '../components/BuySell'
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-
-import { getTx } from '../features/coin/coinSlice';
-
 import TxCell from '../components/TxCell'
-import { isRejected } from '@reduxjs/toolkit'
-import { toast } from 'react-toastify'
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Collapse from '@mui/material/Collapse';
 
+import { Grid, Typography, Box, Container, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material'
 
 const Coins = () => {
 
     const dispatch = useDispatch()
+
     const { id } = useParams()
 
     const { coin, coins, isPending, isRejected, message } = useSelector((state) => state.coin)
-    
-    // const filteredCoins = coins.filter((x) => x.coinId == id)
-    // console.log(filteredCoins)
 
     const [filteredCoins, setFilteredCoins] = useState(coins.filter((x) => x.coinId == id))
-
     const [value, setValue] = useState('daily');
-
-    // uncomment this later
     const [chartData, setChartData] = useState(coin.dailyChart) 
-
     const [page, setPage] = useState(0)
     const [rowsPerPage, setRowsPerPage] = useState(5)
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -76,16 +45,14 @@ const Coins = () => {
         dispatch(getTx())
 
         return () => {
-            dispatch(reset())
+            dispatch(resetCoin())
         }
     },[dispatch, id])
 
     useEffect(() => {
         setFilteredCoins(coins.filter((x) => x.coinId == id))
-    }, [coins]) // by doing this you are saying when coins changes, call this
+    }, [coins])
 
-
-    // uncomment this later
     useEffect(() => {
         setChartData(coin[value + 'Chart'])
     },[coin, value])
@@ -186,7 +153,6 @@ const Coins = () => {
                             showFirstButton={true}
                             showLastButton={true}
                             rowsPerPageOptions={[5, 10, 25]}
-                            // component="div"
                             count={filteredCoins.length}
                             rowsPerPage={rowsPerPage}
                             page={page}

@@ -1,24 +1,12 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-
-import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Container from '@mui/material/Container';
-
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify'
 
 import { loginUser } from '../features/user/userSlice';
-import { useDispatch } from 'react-redux';
 
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify'
+import {Box, Typography, Modal, Avatar, Button, CssBaseline, TextField, Grid, Container} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export default function BasicModal() {
 
@@ -110,7 +98,6 @@ export default function BasicModal() {
             </Button>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
       </Modal>
     </div>
