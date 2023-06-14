@@ -17,12 +17,41 @@ import Profile from './pages/Profile';
 
 import Footer from './components/Footer';
 import ProtectedRoute from './pages/ProtectedRoute';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from './features/user/userSlice';
 
 
 // consider getting store values here instead of from individual page
 // and use a timer to update every min or so
 
 function App() {
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    const validateToken = async (token) => {
+        try {
+            const res = await axios.get("/api/user/validate-token", {
+                headers: {
+                    Authorization: token,
+                },
+            });
+            console.log("Token is valid", res);
+        } catch (error) {
+            console.error("Token is invalid or not provided");
+            dispatch(logoutUser())
+        }
+    };
+    
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.token) {
+      console.log('call validate token')
+      validateToken(user?.token);
+    } else {
+      console.log('not call validate token')
+    }
+}, [dispatch]);
 
   return (
   <>

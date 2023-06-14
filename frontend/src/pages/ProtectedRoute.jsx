@@ -13,6 +13,7 @@ const ProtectedRoute = ({children}) => {
     const [isValidated, setIsValidated] = useState(VALIDATE_STATE.IDLE)
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
         const validateToken = async (token) => {
             try {
                 setIsValidated(VALIDATE_STATE.PENDING)
@@ -29,9 +30,12 @@ const ProtectedRoute = ({children}) => {
                 console.error("Token is invalid or not provided");
             }
         };
-        
-        const user = JSON.parse(localStorage.getItem("user"));
-        validateToken(user.token);
+
+        if (user?.token) {
+            validateToken(user?.token);
+        } else {
+            setIsValidated(VALIDATE_STATE.REJECTED)
+        }
     }, []);
 
     return (
