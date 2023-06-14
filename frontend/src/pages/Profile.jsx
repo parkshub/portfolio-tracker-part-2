@@ -23,6 +23,9 @@ import { authenticate } from '../features/user/userSlice';
 import { resetUser } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 
+import { toast } from 'react-toastify';
+
+
 
 const Profile = () => {
 
@@ -103,6 +106,9 @@ const Profile = () => {
             localStorage.removeItem('user')
             dispatch(resetUser())
             navigate('/main')
+            toast.warn('token expired going to main', {
+                toastId: "your-id"
+              });
         }
         
     },[dispatch])
