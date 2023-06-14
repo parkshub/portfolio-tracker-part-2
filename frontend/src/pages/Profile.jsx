@@ -17,9 +17,17 @@ import { TextField, Box, Table, TableBody, TableCell, TableContainer, TableHead,
 import { tableCellClasses } from "@mui/material/TableCell";
 
 
+
+
+import { authenticate } from '../features/user/userSlice';
+import { resetUser } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+
+
 const Profile = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const { user } = useSelector((state) => state.auth)
     const { coins, isPending, isRejected, message } = useSelector((state) => state.coin)
@@ -89,7 +97,14 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        dispatch(getTx())
+        if (dispatch(authenticate()) === true) {
+            dispatch(getTx())
+        } else {
+            localStorage.removeItem('user')
+            dispatch(resetUser())
+            navigate('/main')
+        }
+        
     },[dispatch])
 
     useEffect(() => {

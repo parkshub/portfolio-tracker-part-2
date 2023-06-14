@@ -1,5 +1,7 @@
 exports.generatePieData = (coins) => {
 
+    try {
+
     if (coins.length === 0) { return '' }
 
     function generateHslaColors (saturation, lightness, alpha, amount) {
@@ -55,6 +57,9 @@ exports.generatePieData = (coins) => {
     ))
 
     return data.sort((a,b) => b.value - a.value)
+    } catch (err) {
+        
+    }
 
 
     // return data

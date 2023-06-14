@@ -4,6 +4,8 @@
 ///////////////////////////////////////////
 exports.generateLineData = (cache, uniqueCoinsUser, coins) => {
 
+    try {
+
     console.log('generateLineData received coins', coins)
 
     if (coins.length === 0) { return '' }
@@ -186,4 +188,7 @@ exports.generateLineData = (cache, uniqueCoinsUser, coins) => {
     // console.log(yearlyLineData, monthlyLineData, dailyLineData)
 
     return {'yearly': yearlyLineData, 'monthly': monthlyLineData, 'daily': dailyLineData, overview}
+    } catch (err) {
+        
+    }
 }

@@ -11,6 +11,21 @@ const initialState = {
     message: ""
 }
 
+export const authenticate = createAsyncThunk(
+    'user/authenticate',
+    async(thunkAPI) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        // console.log('this is the token', JSON.parse(atob(user.token.split('.')[1])).exp < new Date())
+
+        if (user !== null && JSON.parse(atob(user.token.split('.')[1])).exp < new Date()) {
+            // localStorage.removeItem('user')
+            // navigate('/main')
+            return false
+        } else {
+            return true
+        }
+    }
+)
 
 export const registerUser = createAsyncThunk(
     'auth/register',
@@ -53,6 +68,13 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         reset: (state) => {
+            state.isRejected = false
+            state.isPending = false
+            state.isFulfilled = false
+            state.message = ""
+        },
+        resetUser: (state) => {
+            state.user = ""
             state.isRejected = false
             state.isPending = false
             state.isFulfilled = false
@@ -106,4 +128,4 @@ const authSlice = createSlice({
 })
 
 export default authSlice.reducer
-export const { reset } = authSlice.actions
+export const { reset, resetUser } = authSlice.actions
