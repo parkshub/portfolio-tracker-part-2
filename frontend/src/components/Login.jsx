@@ -32,11 +32,14 @@ export default function BasicModal() {
 
   return (
     <div>
-      <Button variant='contained' sx={{m: 1, width: 100}} onClick={handleOpen}>
-        <Typography>
-            Login
-        </Typography>
-      </Button>
+
+        <Button variant='contained' sx={{m: 1, width: 100}} onClick={handleOpen}>
+        {/* <Button variant='contained' sx={{m: 1, width: 100}}> */}
+          <Typography>
+              Login
+          </Typography>
+        </Button>
+
       <Modal
         open={open}
         onClose={handleClose}

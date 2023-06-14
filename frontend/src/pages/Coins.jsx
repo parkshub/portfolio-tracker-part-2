@@ -1,3 +1,9 @@
+// make it so that there is a warning if user presses buy or sell button when their token expired
+
+// make it so that if you're not logged in you don't see the buy and sell button
+
+// make it so that it says something like...to see tx log in or sign up to start tracking
+
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -10,8 +16,15 @@ import { getTx, getCoin, resetCoin } from '../features/coin/coinSlice';
 import ExampleLine from '../components/ExampleLine'
 import BuySell from '../components/BuySell'
 import TxCell from '../components/TxCell'
+import Divider from '@mui/material/Divider';
+
 
 import { Grid, Typography, Box, Container, Tabs, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow} from '@mui/material'
+
+
+import { authenticate } from '../features/user/userSlice';
+import { resetUser } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Coins = () => {
 
@@ -20,8 +33,9 @@ const Coins = () => {
     const { id } = useParams()
 
     const { coin, coins, isPending, isRejected, message } = useSelector((state) => state.coin)
+    const { user } = useSelector((state) => state.auth)
 
-    const [filteredCoins, setFilteredCoins] = useState(coins.filter((x) => x.coinId == id))
+    const [filteredCoins, setFilteredCoins] = useState(coins === undefined ? [] : coins.filter((x) => x.coinId == id))
     const [value, setValue] = useState('daily');
     const [chartData, setChartData] = useState(coin.dailyChart) 
     const [page, setPage] = useState(0)
@@ -40,9 +54,29 @@ const Coins = () => {
         setPage(0);
     }
 
+    const authAsync = async() => {
+
+        const truth = await dispatch(authenticate())
+        console.log('these were the AUTH results', truth.payload)
+
+        if (truth.payload === 'verified') {
+            console.log('here in truth')
+            dispatch(getTx())
+        } else if (truth.payload === 'expired') {
+            console.log('here in false')
+            localStorage.removeItem('user')
+            dispatch(resetUser())
+            toast.warn('Token expired, login again to see transactions', {
+                toastId: "your-id"
+              });
+        }
+    }
+
     useEffect(() => {
+
         dispatch(getCoin(id))
-        dispatch(getTx())
+
+        authAsync()
 
         return () => {
             dispatch(resetCoin())
@@ -50,7 +84,7 @@ const Coins = () => {
     },[dispatch, id])
 
     useEffect(() => {
-        setFilteredCoins(coins.filter((x) => x.coinId == id))
+        setFilteredCoins(coins === undefined ? [] : coins.filter((x) => x.coinId == id))
     }, [coins])
 
     useEffect(() => {
@@ -78,14 +112,16 @@ const Coins = () => {
                                 </Typography>
                             </Typography>
 
-                            <Grid item container justifyContent='center'>
-                                <BuySell transaction={"buy"} yearlyData={coin.yearlyRaw} coinInfo={coin.info}></BuySell>
-                                <BuySell transaction={"sell"} yearlyData={coin.yearlyRaw} coinInfo={coin.info}></BuySell>
-                            </Grid>
+                            { user &&
+                                <Grid item container justifyContent='center'>
+                                    <BuySell transaction={"buy"} yearlyData={coin.yearlyRaw} coinInfo={coin.info}></BuySell>
+                                    <BuySell transaction={"sell"} yearlyData={coin.yearlyRaw} coinInfo={coin.info}></BuySell>
+                                </Grid>
+                            }
                         </Grid>
 
 
-                        <Grid item container xs={12} sm={6} height={400} direction="row">
+                        <Grid item container xs={12} md={6} height={400} direction="row">
                         
                             <Grid item container height={350} xs={12}>
                                 <ExampleLine data={chartData} />
@@ -111,6 +147,14 @@ const Coins = () => {
                     </Grid>
                 }
             </Grid>
+            <Divider orientation="horizontal" flexItem>
+                
+                { user ? 
+                    <Typography>Past Transactions</Typography> :
+                    <Typography>Login or Sign Up to Track Transactions</Typography>
+                }
+                
+            </Divider>
             <TableContainer>
                 <Table>
                     <TableHead>

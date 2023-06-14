@@ -87,8 +87,9 @@ export const getTx = createAsyncThunk(
             const token = thunkAPI.getState().auth.user.token
             return await coinService.getTx(token)
         } catch (error) {
-            const message = error.response.data
-            return thunkAPI.rejectWithValue(message)
+            // const message = error.response.data
+            // return thunkAPI.rejectWithValue(message)
+            return []
         }
     }
 )

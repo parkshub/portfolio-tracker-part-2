@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs")
 
 const generateToken = async(id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
-        // expiresIn: "7d"
-        expiresIn: "5s"
+        expiresIn: "7d"
+        // expiresIn: "5s"
     })
 }
 

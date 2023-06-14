@@ -14,16 +14,20 @@ const initialState = {
 export const authenticate = createAsyncThunk(
     'user/authenticate',
     async(thunkAPI) => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        // console.log('this is the token', JSON.parse(atob(user.token.split('.')[1])).exp < new Date())
+        const user = await JSON.parse(localStorage.getItem("user"));
+        // console.log('this is the user', user)
+        console.log('THIS IS TOKEN EXP DATA VS TODAY', JSON.parse(atob(user.token.split('.')[1])).exp, new Date().getTime())
 
-        if (user !== null && JSON.parse(atob(user.token.split('.')[1])).exp < new Date()) {
-            // localStorage.removeItem('user')
-            // navigate('/main')
-            return false
-        } else {
-            return true
+        if (user !== null && await JSON.parse(atob(user.token.split('.')[1])).exp * 1000 < new Date().getTime()) {
+            console.log('user was not null and it"s expired')
+            return 'expired'
+        } else if (user === null) {
+            return 'no user'
         }
+        else {
+            return 'verified'
+        }
+        // return true
     }
 )
 

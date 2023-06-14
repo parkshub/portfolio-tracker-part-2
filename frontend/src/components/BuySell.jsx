@@ -13,9 +13,18 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 import dayjs from 'dayjs';
 
+import { authenticate } from '../features/user/userSlice';
+import { resetUser } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+
+
+// import { toast } from 'react-toastify';
+
+
 export default function BuySell({transaction, yearlyData, coinInfo}) {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   
   const min = dayjs().set('date', 3).set('month', 0).set('year', 2009)
   const max = dayjs()
@@ -31,7 +40,20 @@ export default function BuySell({transaction, yearlyData, coinInfo}) {
   const [date, setDate] =useState('')
   const [manualInput, setManualInput] = useState(false)
 
-  const handleOpen = () => setOpen(true);
+  // const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    
+    setOpen(true)
+    // if (dispatch(authenticate()) === true) {
+    // } else {
+    //   localStorage.removeItem('user')
+    //   dispatch(resetUser())
+    //   navigate('/main')
+    //   toast.warn('token expired, login again to use buy and sell button', {
+    //       toastId: "your-id"
+    //   });
+    // }
+  };
   const handleClose = () => {
     setOpen(false)
     setFormData({

@@ -70,8 +70,8 @@ const Main = () => {
 
                     { !user &&
                         <Grid item container justifyContent='center'>
-                                <SignUp/>
-                                <Login/>
+                                <SignUp navbar={false}/>
+                                <Login navbar={false}/>
                         </Grid>
                     }
                 </Grid>

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { logoutUser } from '../features/user/userSlice';
@@ -7,6 +9,8 @@ import { logoutUser } from '../features/user/userSlice';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MultilineChartIcon from '@mui/icons-material/MultilineChart';
+
+import Login from './Login'
 
 function ResponsiveAppBar() {
 
@@ -16,6 +20,15 @@ function ResponsiveAppBar() {
   const { user } = useSelector((state) => state.auth)
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  
+  ////////////////////////////////
+
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+  ///////////////////////////////
 
   const settings = user ? ['Main', 'Profile', 'Browse'] : ['Main', 'Browse']
 
@@ -90,10 +103,15 @@ function ResponsiveAppBar() {
                       {setting}
                   </MenuItem>
                 ))}
+                    {/* <MenuItem onClick={handleOpen}>
+                      <Login navbar={true} open={open} handleClose={handleClose}/>
+                    </MenuItem> */}
                 { user &&
-                  <MenuItem onClick={onClickLogout}>
-                    <Typography textAlign="center">Logout</Typography>
-                  </MenuItem>
+                  <>
+                    <MenuItem onClick={onClickLogout}>
+                      <Typography textAlign="center">Logout</Typography>
+                    </MenuItem>
+                  </>
                   
                 }
               </Menu>

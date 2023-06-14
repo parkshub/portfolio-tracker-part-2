@@ -99,17 +99,39 @@ const Profile = () => {
         setLineGraph(lineData)
     }
 
-    useEffect(() => {
-        if (dispatch(authenticate()) === true) {
+
+    const authAsync = async() => {
+
+        const truth = await dispatch(authenticate())
+        console.log('these were the AUTH results', truth.payload)
+
+        if (truth.payload === 'verified') {
+            console.log('here in truth')
             dispatch(getTx())
-        } else {
+        } else if (truth.payload === 'expired') {
+            
             localStorage.removeItem('user')
             dispatch(resetUser())
             navigate('/main')
-            toast.warn('token expired going to main', {
+            toast.warn('Token expired, redirecting to main page', {
                 toastId: "your-id"
               });
         }
+    }
+
+    useEffect(() => {
+
+        authAsync()
+        // if (dispatch(authenticate()) === true) {
+        //     dispatch(getTx())
+        // } else {
+        //     localStorage.removeItem('user')
+        //     dispatch(resetUser())
+        //     navigate('/main')
+        //     toast.warn('token expired going to main', {
+        //         toastId: "your-id"
+        //       });
+        // }
         
     },[dispatch])
 
