@@ -1,4 +1,4 @@
-![](https://github.com/parkshub/portfolio-tracker-part-2/resources/projectGif.gif)
+![](https://github.com/parkshub/portfolio-tracker-part-2/blob/main/resources/projectGif.gif)
 
 
 # Getting Started with Create React App
