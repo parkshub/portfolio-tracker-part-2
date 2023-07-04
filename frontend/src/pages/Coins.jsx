@@ -66,7 +66,7 @@ const Coins = () => {
             console.log('here in false')
             localStorage.removeItem('user')
             dispatch(resetUser())
-            toast.warn('Token expired, please login again to see transactions', {
+            toast.warn('Token expired, please login again to see and record transactions', {
                 toastId: "your-id"
               });
         }
