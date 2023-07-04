@@ -113,7 +113,7 @@ const Profile = () => {
             localStorage.removeItem('user')
             dispatch(resetUser())
             navigate('/main')
-            toast.warn('Token expired, redirecting to main page', {
+            toast.warn('Token expired, please re-login. Redirecting to main page', {
                 toastId: "your-id"
               });
         }
