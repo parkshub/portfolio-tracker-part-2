@@ -1,4 +1,7 @@
 # Portfolio Tracker
+
+https://github.com/parkshub/portfolio-tracker-part-2/assets/87814883/ebbc9023-a202-4d46-9fc4-bf79e76a3e54
+
 ## Introduction
 
 #### This web application keeps track of your cryptocurrency portfolio. The decision to use cryptocurrencies rather than stocks was due to its more readily available and well-documented APIs. On the Browse page, users can browse through the top 100 coins presented on a table with information on the asset’s name, ticker, market capitalization, current price, and 24-hour price activity. Upon clicking on one of the coins, the user will be taken to the respective coin’s profile page. Here, the users can track the price action of the coin through a line graph, which can be switched to a daily, monthly, or yearly graph. Furthermore, users can record their “buy” and “sell” transactions for that coin. All past transactions are displayed in the table below. When recording transactions, users can choose to use the price recommended by the application for that date or manually input the price.
@@ -21,4 +24,17 @@
 
 #### Due to the API call limit, I had to make several concessions—one being the fact that each page only updates the information on each page once a day and the other being the fact the Browse page’s coins only take you to either Bitcoin’s or Ethereum’s Coin page. This had to be done to prevent reaching the daily limit preemptively. Furthermore, suppose both the local storage and database’s data are outdated, and the API limit has been reached. In that case, pages will render outdated information using either of the most up-to-date information. With more API calls, creating a fully functional website where coin data is automatically and periodically updated and where users can freely browse every coin would have been great. Additionally, I would’ve liked the carousel on the Main page to update every minute to reflect the coins’ price changes. Lastly, I would have liked to handle JWT expiration at the App level instead of the page level. 
 
+
+# Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm run dev`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
