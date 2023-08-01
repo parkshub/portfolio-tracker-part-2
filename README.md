@@ -1,3 +1,5 @@
+### Please feel free to test out the site using username: test@test.com password: test
+
 # Portfolio Tracker
 
 https://github.com/parkshub/portfolio-tracker-part-2/assets/87814883/ebbc9023-a202-4d46-9fc4-bf79e76a3e54
