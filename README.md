@@ -10,7 +10,7 @@ https://github.com/parkshub/portfolio-tracker-part-2/assets/87814883/ebbc9023-a2
 
 #### In the Profile page, users are given basic statistics on their portfolio—dollar valuation, daily percentage change, total allocation, and net profit. Similar to the line graph on the Coin page, users can track their portfolio on a line graph that can also be viewed on a daily, monthly, or yearly basis. They’re also given a pie graph with each slice representing an asset’s relative total allocation in their portfolio. Users can see all their previous transactions at the bottom of the Profile page and filter by asset name. Clicking a transaction will take the user to the respective coin’s page. The user can delete any transactions they’ve made on either the Coin or Profile page.
 
-url: https://crypto-portfolio-tracker-61f20615e34f.herokuapp.com/
+#### URL: https://crypto-portfolio-tracker-61f20615e34f.herokuapp.com
 
 ## Lessons Learned and Optimizations
 
